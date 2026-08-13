@@ -1,0 +1,48 @@
+# Configuration for hidden-liquidity Markov-modulated marked Hawkes experiments
+# Parameters: those explicitly stated in the paper use paper values;
+# those omitted (zeta, T) are chosen and documented here.
+
+model:
+  T: 20.0                      # Finite horizon (researcher-chosen; paper omits exact value)
+  zeta: 2.0                    # Mark exponential rate (researcher-chosen; paper omits)
+  n_states: 2
+  generator:                   # Generator Psi of hidden CTMC
+    - [-0.2, 0.2]
+    - [0.2, -0.2]
+  beta: 0.5                    # Mean-reversion speed for intensities
+  nu: 0.8                      # Permanent-impact fraction
+  rho: 0.1                     # Transient-deviation decay rate
+  c0: 0.1                      # Fixed trading cost
+  eta: 0.05                    # Excitation exponent
+  lambda_infty_1: 1.0          # Baseline intensity regime 1
+  lambda_infty_2: 1.0          # Baseline intensity regime 2 (symmetric assumption)
+  c: 1.0                       # Order-book depth parameter
+  e: 3.0                       # Order-book shape exponent
+
+filter:
+  priors: [0.9, 0.5, 0.1]     # pi_0(regime_1) values for visual replication
+  intensity_settings:          # (kappa^{1,+}, kappa^{1,-}) with symmetry for regime 2
+    - [5.0, 1.0]
+    - [3.0, 3.0]
+    - [1.0, 5.0]
+  eps: 1.0e-15                 # Numerical safety for Bayes denominator
+
+dp_solver:
+  N_iter: 20                    # Number of DP iterations (paper displays N=20)
+  n_time: 40                    # Time-grid points
+  n_inventory: 30               # Inventory grid points (x in [0, x_max])
+  x_max: 5.0                    # Maximum inventory
+  n_belief: 21                  # Belief grid points (mu in [0,1])
+  n_kappa: 20                   # Points per intensity axis
+  kappa_max: 6.0                # Upper bound for intensity grid
+  n_d: 11                       # Transient-deviation grid points
+  d_max: 2.0                    # Max |d| for transient deviation
+  d_fixed: 1.5                  # Initial transient deviation at t=0 (researcher-chosen;
+                                 # paper omits; 1.5 chosen so TC break-even near x=1)
+  n_xi: 50                      # Action grid resolution
+  n_quad_mark: 20               # Gauss-Laguerre nodes for mark quadrature
+  n_quad_time: 10               # Quadrature nodes for first-jump time integral
+  tol_exercise: 1.0e-5          # Tolerance for exercise vs continuation classification
+  c_sensitivity: [1.0, 0.7]    # Values of c to compare for impact sensitivity
+
+random_seed: 42

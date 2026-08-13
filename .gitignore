@@ -1,0 +1,46 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# MLflow
+mlruns/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Raw market data dumps (exploratory — not project deliverables)
+*.csv.gz
+data/raw/
+data/cache/
+
+# Secrets
+.env
+*.key
